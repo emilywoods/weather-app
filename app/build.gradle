@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'A'
-            keyPassword ''
+            keyAlias 'AndroidWeatherKey'
+            keyPassword 'K3Ystore'
             storeFile file('keystores/android.jks')
-            storePassword ''
+            storePassword 'K3Ypass'
         }
     }
     compileSdkVersion 24
