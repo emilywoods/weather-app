@@ -8,10 +8,11 @@ public class CurrentWeather {
     private String description;
     private String name;
     private String temperature;
-    private float latitude;
-    private float longitude;
+    private String latitude;
+    private String longitude;
 
-    public CurrentWeather(String description, String name, String temperature, float latitude, float longitude) {
+
+    public CurrentWeather(String description, String name, String temperature, String latitude, String longitude) {
         this.description = description;
         this.name = name;
         this.temperature = temperature;
@@ -31,11 +32,11 @@ public class CurrentWeather {
         return temperature;
     }
 
-    public float getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public float getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 

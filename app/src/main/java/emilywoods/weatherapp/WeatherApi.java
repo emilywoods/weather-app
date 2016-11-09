@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 
 public interface WeatherApi {
 
-    @GET("")
-    Call<CurrentWeather> getName();
+    @GET("locations/14/update_weather/")
+    Call<CurrentWeather> getWeatherInfo();
 
 }
