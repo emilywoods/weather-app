@@ -4,40 +4,41 @@ package emilywoods.weatherapp;
  * Created by emilywoods on 08/11/2016.
  */
 
+
 public class CurrentWeather {
     private String description;
-    private String name;
+    private String locName;
     private String temperature;
-    private String latitude;
-    private String longitude;
+    private String locLatitude;
+    private String locLongitude;
 
 
-    public CurrentWeather(String description, String name, String temperature, String latitude, String longitude) {
+    public CurrentWeather(String description, String locName, String temperature, String locLatitude, String locLongitude) {
         this.description = description;
-        this.name = name;
+        this.locName = locName;
         this.temperature = temperature;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.locLatitude = locLatitude;
+        this.locLongitude = locLongitude;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getName() {
-        return name;
+    public String getLocName() {
+        return locName;
     }
 
     public String getTemperature() {
         return temperature;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public String getLocLatitude() {
+        return locLatitude;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public String getLocLongitude() {
+        return locLongitude;
     }
 
 

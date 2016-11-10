@@ -1,5 +1,7 @@
 package emilywoods.weatherapp;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -11,5 +13,8 @@ public interface WeatherApi {
 
     @GET("locations/14/update_weather/")
     Call<CurrentWeather> getWeatherInfo();
+
+    @GET("locations")
+    Call<List<Locations>> getLocationInfo();
 
 }
