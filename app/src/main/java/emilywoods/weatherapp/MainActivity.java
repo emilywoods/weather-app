@@ -9,13 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListAdapter;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 import android.support.design.widget.Snackbar;
 
 import java.util.List;
+
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements WeatherCallback {
     private static final int INDEX_VIEW_LOADING = 0;
@@ -25,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     private RecyclerView recyclerView;
     private LocationsAdapter lAdapter;
     private ViewSwitcher viewSwitcher;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
 
     @Override
     public void onCurrentWeather(CurrentWeather currentWeather) {
-        Log.e(getClass().getCanonicalName(), currentWeather.getDescription());
+        Timber.e(getClass().getCanonicalName(), currentWeather.getDescription());
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
 
     @Override
     public void onLocations(List<Locations> locations) {
-        Log.e(getClass().getCanonicalName(), "" + locations.size());
+        Timber.e(getClass().getCanonicalName(), "" + locations.size());
         lAdapter.setLocationsList(locations);
         viewSwitcher.setDisplayedChild(INDEX_VIEW_CONTENT);
 

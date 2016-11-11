@@ -12,6 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 
 /**
@@ -55,16 +56,16 @@ public class ApiClient {
         call.enqueue(new Callback<CurrentWeather>() {
             @Override
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
-                Log.d("API", "Success!");
                 if (response == null || response.body() == null) {
                     return;
                 }
+                Timber.e("Success");
                 weatherCallback.onCurrentWeather(response.body());
             }
 
             @Override
             public void onFailure(Call<CurrentWeather> call, Throwable t) {
-                Log.d("API", "Oh noes!");
+                Timber.e("API Error");
                 weatherCallback.onError();
             }
         });
@@ -75,7 +76,6 @@ public class ApiClient {
         call.enqueue(new Callback<List<Locations>>() {
             @Override
             public void onResponse(Call<List<Locations>> call, Response<List<Locations>> locResponse) {
-                Log.d("API", "Success");
                 if (locResponse == null || locResponse.body()==null){
                     return;
                 }
