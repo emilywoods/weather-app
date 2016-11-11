@@ -1,6 +1,7 @@
 package emilywoods.weatherapp;
 
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     private RecyclerView recyclerView;
     private LocationsAdapter lAdapter;
     private ViewSwitcher viewSwitcher;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
