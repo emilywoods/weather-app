@@ -49,8 +49,8 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.myVi
     public void onBindViewHolder(myViewHolder holder, int position) {
         Locations locations = locationsList.get(position);
         holder.name.setText(locations.getName());
-        holder.name.setText(locations.getLatitude());
-        holder.name.setText(locations.getLatitude());
+        holder.latitude.setText(locations.getLatitude());
+        holder.longitude.setText(locations.getLongitude());
 
     }
 

@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiClient {
-    public static final String BASE_URL = "http://10.2.1.6:3000/api/v1/";
+    public static final String BASE_URL = "http://10.10.0.6:3000/api/v1/";
 
     private HttpLoggingInterceptor interceptor;
     private OkHttpClient client;
@@ -80,6 +80,7 @@ public class ApiClient {
                     return;
                 }
                 weatherCallback.onLocations(locResponse.body());
+
             }
 
             @Override

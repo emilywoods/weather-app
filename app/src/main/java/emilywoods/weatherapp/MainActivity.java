@@ -7,23 +7,33 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListAdapter;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+import android.widget.ViewSwitcher;
+import android.support.design.widget.Snackbar;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements WeatherCallback {
+    private static final int INDEX_VIEW_LOADING = 0;
+    private static final int INDEX_VIEW_CONTENT = 1;
 
     private ApiClient apiClient;
     private RecyclerView recyclerView;
     private LocationsAdapter lAdapter;
+    private ViewSwitcher viewSwitcher;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.location_recycler_view);
+        viewSwitcher = (ViewSwitcher) findViewById(R.id.ViewSwitcher);
 
+        recyclerView = (RecyclerView) findViewById(R.id.location_recycler_view);
         lAdapter = new LocationsAdapter();
         RecyclerView.LayoutManager lLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(lLayoutManager);
@@ -32,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
 
         apiClient = new ApiClient();
         apiClient.setCallbackListener(this);
-        apiClient.getLocationInfo();
-
 
     }
 
@@ -42,9 +50,9 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     @Override
     protected void onResume() {
         super.onResume();
-
         //apiClient.getWeatherInfo();
-        apiClient.getLocationInfo();
+        apiClient.getLocationInfo(); //Make request
+        viewSwitcher.setDisplayedChild(INDEX_VIEW_LOADING);
     }
 
     @Override
@@ -54,6 +62,16 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
 
     @Override
     public void onError() {
+        Snackbar snackbar =
+                Snackbar.make(recyclerView, R.string.snackbar_error,
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction("RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                apiClient.getLocationInfo();
+            }
+        });
+        snackbar.show();
 
     }
 
@@ -61,5 +79,7 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     public void onLocations(List<Locations> locations) {
         Log.e(getClass().getCanonicalName(), "" + locations.size());
         lAdapter.setLocationsList(locations);
+        viewSwitcher.setDisplayedChild(INDEX_VIEW_CONTENT);
+
     }
 }
