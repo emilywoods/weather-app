@@ -11,6 +11,4 @@ public class WeatherApp extends Application {
         super.onCreate();
         Timber.plant(new Timber.DebugTree());
     }
-
-
 }

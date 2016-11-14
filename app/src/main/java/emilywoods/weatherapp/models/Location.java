@@ -4,12 +4,12 @@ package emilywoods.weatherapp.models;
  * Created by emilywoods on 10/11/2016.
  */
 
-public class Locations {
+public class Location {
     private String name;
-    private String longitude;
-    private String latitude;
+    private float longitude;
+    private float latitude;
 
-    public Locations(String name, String longitude, String latitude) {
+    public Location(String name, float longitude, float latitude) {
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -19,11 +19,11 @@ public class Locations {
         return name;
     }
 
-    public String getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public String getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 }

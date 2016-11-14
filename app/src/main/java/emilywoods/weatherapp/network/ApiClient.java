@@ -1,10 +1,11 @@
 package emilywoods.weatherapp.network;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import emilywoods.weatherapp.models.CurrentWeather;
-import emilywoods.weatherapp.models.Locations;
+import emilywoods.weatherapp.models.Location;
 import emilywoods.weatherapp.activities.WeatherCallback;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -57,7 +58,8 @@ public class ApiClient {
             @Override
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
                 if (response == null || response.body() == null) {
-                    return;
+                    Throwable e = new IOException("Null response");
+                    Timber.e(e, "An exception occurred");
                 }
                 Timber.i("Success");
                 weatherCallback.onCurrentWeather(response.body());
@@ -65,26 +67,29 @@ public class ApiClient {
 
             @Override
             public void onFailure(Call<CurrentWeather> call, Throwable t) {
-                Timber.e("API Error");
+                Throwable e = new IOException("Error connecting to API");
+                Timber.e(e, "An exception occurred");
                 weatherCallback.onError();
             }
         });
     }
 
     public void getLocationInfo(){
-        Call<List<Locations>> call = weatherApi.getLocationInfo();
-        call.enqueue(new Callback<List<Locations>>() {
+        Call<List<Location>> call = weatherApi.getLocationInfo();
+        call.enqueue(new Callback<List<Location>>() {
             @Override
-            public void onResponse(Call<List<Locations>> call, Response<List<Locations>> locResponse) {
+            public void onResponse(Call<List<Location>> call, Response<List<Location>> locResponse) {
                 if (locResponse == null || locResponse.body()==null){
-                    return;
+                    Throwable e = new IOException("Null response");
+                    Timber.e(e, "An exception occurred");
                 }
-                weatherCallback.onLocations(locResponse.body());
-
+                weatherCallback.onLocationsFetched(locResponse.body());
             }
 
             @Override
-            public void onFailure(Call<List<Locations>> call, Throwable t) {
+            public void onFailure(Call<List<Location>> call, Throwable t) {
+                Throwable e = new IOException("Error connecting to API");
+                Timber.e(e, "An exception occurred");
                 weatherCallback.onError();
             }
         });

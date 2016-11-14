@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WeatherApp</string>
-    <string name="snackbar_error">Error loading locations</string>
+    <string name="location_error_message">Error loading locations</string>
+    <string name="RETRY">RETRY</string>
 </resources>

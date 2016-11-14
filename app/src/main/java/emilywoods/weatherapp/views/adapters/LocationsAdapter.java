@@ -12,17 +12,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import emilywoods.weatherapp.R;
-import emilywoods.weatherapp.models.Locations;
+import emilywoods.weatherapp.models.Location;
 
 /**
  * Created by emilywoods on 10/11/2016.
  */
 
-public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.myViewHolder> {
+public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.MyViewHolder> {
 
-    private List<Locations> locationsList;
+    private List<Location> locationsList;
 
-    static class myViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.name)
         TextView name;
         @BindView(R.id.latitude)
@@ -30,7 +30,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.myVi
         @BindView(R.id.longitude)
         TextView longitude;
 
-        public myViewHolder(View itemView) {
+        public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -40,25 +40,24 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.myVi
         this.locationsList = new ArrayList<>();
     }
 
-    public void setLocationsList(List<Locations> locationsList) {
+    public void setLocationsList(List<Location> locationsList) {
         this.locationsList = locationsList;
         notifyDataSetChanged();
     }
 
     @Override
-    public myViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.locations_list, parent, false);
-        return new myViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(myViewHolder holder, int position) {
-        Locations locations = locationsList.get(position);
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Location locations = locationsList.get(position);
         holder.name.setText(locations.getName());
-        holder.latitude.setText(locations.getLatitude());
-        holder.longitude.setText(locations.getLongitude());
-
+        holder.latitude.setText(String.valueOf(locations.getLatitude()));
+        holder.longitude.setText(String.valueOf(locations.getLongitude()));
     }
 
     @Override

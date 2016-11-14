@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import emilywoods.weatherapp.views.adapters.LocationsAdapter;
 import emilywoods.weatherapp.R;
 import emilywoods.weatherapp.models.CurrentWeather;
-import emilywoods.weatherapp.models.Locations;
+import emilywoods.weatherapp.models.Location;
 import emilywoods.weatherapp.network.ApiClient;
 import timber.log.Timber;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     private static final int INDEX_VIEW_CONTENT = 1;
 
     private ApiClient apiClient;
-    private LocationsAdapter lAdapter;
+    private LocationsAdapter locationsAdapter;
 
     @BindView(R.id.location_recycler_view)
     protected RecyclerView recyclerView;
@@ -40,24 +40,22 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        lAdapter = new LocationsAdapter();
+        locationsAdapter = new LocationsAdapter();
         RecyclerView.LayoutManager lLayoutManager = new LinearLayoutManager(getApplicationContext());
 
         recyclerView.setLayoutManager(lLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(lAdapter);
+        recyclerView.setAdapter(locationsAdapter);
 
         apiClient = new ApiClient();
         apiClient.setCallbackListener(this);
-
     }
 
-    // onCreate, onPause, onResume, onStart, and onStop
 
     @Override
     protected void onResume() {
         super.onResume();
-        apiClient.getLocationInfo(); //Make request
+        apiClient.getLocationInfo();
         apiClient.getWeatherInfo();
         viewSwitcher.setDisplayedChild(INDEX_VIEW_LOADING);
     }
@@ -70,25 +68,21 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     @Override
     public void onError() {
         Snackbar snackbar =
-                Snackbar.make(recyclerView, R.string.snackbar_error,
+                Snackbar.make(recyclerView, R.string.location_error_message,
                         Snackbar.LENGTH_INDEFINITE)
-                        .setAction("RETRY", new View.OnClickListener() {
+                        .setAction(R.string.RETRY, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 apiClient.getLocationInfo();
                             }
                         });
         snackbar.show();
-
     }
 
     @Override
-    public void onLocations(List<Locations> locations) {
+    public void onLocationsFetched(List<Location> locations) {
         Timber.i("Fetched %s locations.", locations.size());
-        lAdapter.setLocationsList(locations);
-
+        locationsAdapter.setLocationsList(locations);
         viewSwitcher.setDisplayedChild(INDEX_VIEW_CONTENT);
-
     }
-
 }

@@ -7,39 +7,20 @@ package emilywoods.weatherapp.models;
 
 public class CurrentWeather {
     private String description;
-    private String locName;
-    private String temperature;
-    private String locLatitude;
-    private String locLongitude;
+    private String temperature;;
 
 
-    public CurrentWeather(String description, String locName, String temperature, String locLatitude, String locLongitude) {
+    public CurrentWeather(String description, String temperature) {
         this.description = description;
-        this.locName = locName;
         this.temperature = temperature;
-        this.locLatitude = locLatitude;
-        this.locLongitude = locLongitude;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getLocName() {
-        return locName;
-    }
-
     public String getTemperature() {
         return temperature;
     }
-
-    public String getLocLatitude() {
-        return locLatitude;
-    }
-
-    public String getLocLongitude() {
-        return locLongitude;
-    }
-
 
 }
