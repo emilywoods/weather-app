@@ -9,6 +9,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by emilywoods on 10/11/2016.
  */
@@ -17,15 +20,17 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.myVi
 
     private List<Locations> locationsList;
 
-    public class myViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, longitude, latitude;
+    static class myViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.name)
+        TextView name;
+        @BindView(R.id.latitude)
+        TextView latitude;
+        @BindView(R.id.longitude)
+        TextView longitude;
 
         public myViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.name);
-            latitude = (TextView) itemView.findViewById(R.id.latitude);
-            longitude = (TextView) itemView.findViewById(R.id.longitude);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 
@@ -37,6 +42,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.myVi
         this.locationsList = locationsList;
         notifyDataSetChanged();
     }
+
 
     @Override
     public myViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

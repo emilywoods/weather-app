@@ -20,13 +20,12 @@ import timber.log.Timber;
  */
 
 public class ApiClient {
-    public static final String BASE_URL = "http://10.10.0.6:3000/api/v1/";
+    public static final String BASE_URL = "http://10.2.1.6:3000/api/v1/";
 
     private HttpLoggingInterceptor interceptor;
     private OkHttpClient client;
     private Retrofit retrofit;
     private WeatherCallback weatherCallback;
-
     private WeatherApi weatherApi;
 
     public ApiClient() {
@@ -59,7 +58,7 @@ public class ApiClient {
                 if (response == null || response.body() == null) {
                     return;
                 }
-                Timber.e("Success");
+                Timber.i("Success");
                 weatherCallback.onCurrentWeather(response.body());
             }
 

@@ -14,6 +14,8 @@ import android.support.design.widget.Snackbar;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements WeatherCallback {
@@ -21,21 +23,23 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     private static final int INDEX_VIEW_CONTENT = 1;
 
     private ApiClient apiClient;
-    private RecyclerView recyclerView;
     private LocationsAdapter lAdapter;
-    private ViewSwitcher viewSwitcher;
+
+    @BindView(R.id.location_recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.view_switcher)
+    ViewSwitcher viewSwitcher;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        viewSwitcher = (ViewSwitcher) findViewById(R.id.ViewSwitcher);
-
-        recyclerView = (RecyclerView) findViewById(R.id.location_recycler_view);
         lAdapter = new LocationsAdapter();
         RecyclerView.LayoutManager lLayoutManager = new LinearLayoutManager(getApplicationContext());
+
         recyclerView.setLayoutManager(lLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(lAdapter);
@@ -50,36 +54,38 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     @Override
     protected void onResume() {
         super.onResume();
-        //apiClient.getWeatherInfo();
         apiClient.getLocationInfo(); //Make request
+        apiClient.getWeatherInfo();
         viewSwitcher.setDisplayedChild(INDEX_VIEW_LOADING);
     }
 
     @Override
     public void onCurrentWeather(CurrentWeather currentWeather) {
-        Timber.e(getClass().getCanonicalName(), currentWeather.getDescription());
+        Timber.d("Fetched current weather info :%s", currentWeather.getDescription());
     }
 
     @Override
     public void onError() {
         Snackbar snackbar =
                 Snackbar.make(recyclerView, R.string.snackbar_error,
-                Snackbar.LENGTH_INDEFINITE)
-                .setAction("RETRY", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                apiClient.getLocationInfo();
-            }
-        });
+                        Snackbar.LENGTH_INDEFINITE)
+                        .setAction("RETRY", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                apiClient.getLocationInfo();
+                            }
+                        });
         snackbar.show();
 
     }
 
     @Override
     public void onLocations(List<Locations> locations) {
-        Timber.e(getClass().getCanonicalName(), "" + locations.size());
+        Timber.i("Fetched %s locations.", locations.size());
         lAdapter.setLocationsList(locations);
+
         viewSwitcher.setDisplayedChild(INDEX_VIEW_CONTENT);
 
     }
+
 }
