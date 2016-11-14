@@ -1,4 +1,4 @@
-package emilywoods.weatherapp;
+package emilywoods.weatherapp.managers;
 
 import android.app.Application;
 

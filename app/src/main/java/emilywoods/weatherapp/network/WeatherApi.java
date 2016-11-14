@@ -1,7 +1,9 @@
-package emilywoods.weatherapp;
+package emilywoods.weatherapp.network;
 
 import java.util.List;
 
+import emilywoods.weatherapp.models.CurrentWeather;
+import emilywoods.weatherapp.models.Locations;
 import retrofit2.Call;
 import retrofit2.http.GET;
 

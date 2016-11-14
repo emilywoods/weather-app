@@ -1,4 +1,4 @@
-package emilywoods.weatherapp;
+package emilywoods.weatherapp.models;
 
 /**
  * Created by emilywoods on 10/11/2016.

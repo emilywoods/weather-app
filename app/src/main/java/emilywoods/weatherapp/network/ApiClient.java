@@ -1,10 +1,11 @@
-package emilywoods.weatherapp;
-
-import android.util.Log;
+package emilywoods.weatherapp.network;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import emilywoods.weatherapp.models.CurrentWeather;
+import emilywoods.weatherapp.models.Locations;
+import emilywoods.weatherapp.activities.WeatherCallback;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;

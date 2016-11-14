@@ -1,4 +1,4 @@
-package emilywoods.weatherapp;
+package emilywoods.weatherapp.views.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import emilywoods.weatherapp.R;
+import emilywoods.weatherapp.models.Locations;
 
 /**
  * Created by emilywoods on 10/11/2016.
@@ -43,7 +45,6 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.myVi
         notifyDataSetChanged();
     }
 
-
     @Override
     public myViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -64,6 +65,5 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.myVi
     public int getItemCount() {
         return locationsList.size();
     }
-
 
 }

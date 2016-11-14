@@ -1,13 +1,11 @@
-package emilywoods.weatherapp;
+package emilywoods.weatherapp.activities;
 
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ViewSwitcher;
 import android.support.design.widget.Snackbar;
@@ -16,6 +14,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import emilywoods.weatherapp.views.adapters.LocationsAdapter;
+import emilywoods.weatherapp.R;
+import emilywoods.weatherapp.models.CurrentWeather;
+import emilywoods.weatherapp.models.Locations;
+import emilywoods.weatherapp.network.ApiClient;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements WeatherCallback {
@@ -26,9 +29,9 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     private LocationsAdapter lAdapter;
 
     @BindView(R.id.location_recycler_view)
-    RecyclerView recyclerView;
+    protected RecyclerView recyclerView;
     @BindView(R.id.view_switcher)
-    ViewSwitcher viewSwitcher;
+    protected ViewSwitcher viewSwitcher;
 
 
     @Override
