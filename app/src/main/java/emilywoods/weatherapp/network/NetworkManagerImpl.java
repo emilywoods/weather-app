@@ -1,9 +1,9 @@
 package emilywoods.weatherapp.network;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import emilywoods.weatherapp.activities.LocationCallback;
 import emilywoods.weatherapp.models.CurrentWeather;
 import emilywoods.weatherapp.models.Location;
 import emilywoods.weatherapp.activities.WeatherCallback;
@@ -16,16 +16,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-public class ApiClient {
-    public static final String BASE_URL = "http://10.2.1.6:3000/api/v1/";
+public class NetworkManagerImpl implements NetworkManager {
+    public static final String BASE_URL = "http://10.10.0.55:3000/api/v1/";
 
     private HttpLoggingInterceptor interceptor;
     private OkHttpClient client;
     private Retrofit retrofit;
-    private WeatherCallback weatherCallback;
     private WeatherApi weatherApi;
 
-    public ApiClient() {
+    public NetworkManagerImpl() {
         interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         client = new OkHttpClient.Builder()
@@ -43,12 +42,9 @@ public class ApiClient {
         weatherApi = retrofit.create(WeatherApi.class);
     }
 
-    public void setCallbackListener(WeatherCallback weatherCallback) {
-        this.weatherCallback = weatherCallback;
-    }
-
-    public void getWeatherInfo() {
-        Call<CurrentWeather> call = weatherApi.getWeatherInfo();
+    @Override
+    public void getWeatherInfo(int locationId, final WeatherCallback weatherCallback) {
+        Call<CurrentWeather> call = weatherApi.getWeatherInfo(locationId);
         call.enqueue(new Callback<CurrentWeather>() {
             @Override
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
@@ -58,7 +54,7 @@ public class ApiClient {
                     return;
                 }
                 Timber.i("Success");
-                weatherCallback.onCurrentWeather(response.body());
+                weatherCallback.onCurrentWeatherFetched(response.body());
             }
 
             @Override
@@ -69,24 +65,25 @@ public class ApiClient {
         });
     }
 
-    public void getLocationInfo() {
+    @Override
+    public void getLocationInfo(final LocationCallback locationCallback) {
         Call<List<Location>> call = weatherApi.getLocationInfo();
         call.enqueue(new Callback<List<Location>>() {
             @Override
             public void onResponse(Call<List<Location>> call, Response<List<Location>> locResponse) {
                 if (locResponse == null || locResponse.body()==null) {
                     Timber.e("Empty response from location request");
-                    weatherCallback.onError();
+                    locationCallback.onError();
                 } else {
                     Timber.i("Success");
-                    weatherCallback.onLocationsFetched(locResponse.body());
+                    locationCallback.onLocationsFetched(locResponse.body());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Location>> call, Throwable throwable) {
                 Timber.e(throwable, "Error fetching location info");
-                weatherCallback.onError();
+                locationCallback.onError();
             }
         });
     }

@@ -9,10 +9,9 @@ import emilywoods.weatherapp.models.Location;
  * Created by emilywoods on 09/11/2016.
  */
 
-public interface WeatherCallback {
+public interface LocationCallback {
 
-    void onCurrentWeatherFetched(CurrentWeather currentWeather);
+    void onLocationsFetched(List<Location> locations);
 
     void onError();
-
 }

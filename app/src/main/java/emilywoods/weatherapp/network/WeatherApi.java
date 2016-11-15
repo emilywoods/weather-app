@@ -9,8 +9,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface WeatherApi {
-    @GET("locations/id/update_weather/")
-    Call<CurrentWeather> getWeatherInfo();
+    @GET("locations/{id}/update_weather/")
+    Call<CurrentWeather> getWeatherInfo(@Path("id") int id);
 
     @GET("locations")
     Call<List<Location>> getLocationInfo();
