@@ -1,9 +1,5 @@
 package emilywoods.weatherapp.models;
 
-/**
- * Created by emilywoods on 10/11/2016.
- */
-
 public class Location {
     private String name;
     private float longitude;

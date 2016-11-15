@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
     @BindView(R.id.view_switcher)
     protected ViewSwitcher viewSwitcher;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements WeatherCallback {
         apiClient = new ApiClient();
         apiClient.setCallbackListener(this);
     }
-
 
     @Override
     protected void onResume() {

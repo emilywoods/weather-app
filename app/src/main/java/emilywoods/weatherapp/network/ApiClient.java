@@ -16,11 +16,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-
-/**
- * Created by emilywoods on 08/11/2016.
- */
-
 public class ApiClient {
     public static final String BASE_URL = "http://10.2.1.6:3000/api/v1/";
 
@@ -58,38 +53,39 @@ public class ApiClient {
             @Override
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
                 if (response == null || response.body() == null) {
-                    Throwable e = new IOException("Null response");
-                    Timber.e(e, "An exception occurred");
+                    Timber.e("Empty response from location request.");
+                    weatherCallback.onError();
+                    return;
                 }
                 Timber.i("Success");
                 weatherCallback.onCurrentWeather(response.body());
             }
 
             @Override
-            public void onFailure(Call<CurrentWeather> call, Throwable t) {
-                Throwable e = new IOException("Error connecting to API");
-                Timber.e(e, "An exception occurred");
+            public void onFailure(Call<CurrentWeather> call, Throwable throwable) {
+                Timber.e(throwable, "Error fetching location info.");
                 weatherCallback.onError();
             }
         });
     }
 
-    public void getLocationInfo(){
+    public void getLocationInfo() {
         Call<List<Location>> call = weatherApi.getLocationInfo();
         call.enqueue(new Callback<List<Location>>() {
             @Override
             public void onResponse(Call<List<Location>> call, Response<List<Location>> locResponse) {
-                if (locResponse == null || locResponse.body()==null){
-                    Throwable e = new IOException("Null response");
-                    Timber.e(e, "An exception occurred");
+                if (locResponse == null || locResponse.body()==null) {
+                    Timber.e("Empty response from location request");
+                    weatherCallback.onError();
+                } else {
+                    Timber.i("Success");
+                    weatherCallback.onLocationsFetched(locResponse.body());
                 }
-                weatherCallback.onLocationsFetched(locResponse.body());
             }
 
             @Override
-            public void onFailure(Call<List<Location>> call, Throwable t) {
-                Throwable e = new IOException("Error connecting to API");
-                Timber.e(e, "An exception occurred");
+            public void onFailure(Call<List<Location>> call, Throwable throwable) {
+                Timber.e(throwable, "Error fetching location info");
                 weatherCallback.onError();
             }
         });
