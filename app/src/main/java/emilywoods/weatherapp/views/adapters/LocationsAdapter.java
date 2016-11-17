@@ -20,6 +20,7 @@ import emilywoods.weatherapp.models.Location;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.MyViewHolder> {
 
+    private final LocationClickListener mLocationClickListener;
     private List<Location> locationsList;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -36,7 +37,8 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.MyVi
         }
     }
 
-    public LocationsAdapter() {
+    public LocationsAdapter(LocationClickListener locationClickListener) {
+        mLocationClickListener = locationClickListener;
         this.locationsList = new ArrayList<>();
     }
 
@@ -49,15 +51,25 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.MyVi
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.locations_list, parent, false);
-        return new MyViewHolder(itemView);
+
+        final MyViewHolder holder = new MyViewHolder(itemView);
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         Location locations = locationsList.get(position);
         holder.name.setText(locations.getName());
         holder.latitude.setText(String.valueOf(locations.getLatitude()));
         holder.longitude.setText(String.valueOf(locations.getLongitude()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final int position = holder.getAdapterPosition();
+                mLocationClickListener.onLocationClicked(locationsList.get(position));
+            }
+        });
     }
 
     @Override
