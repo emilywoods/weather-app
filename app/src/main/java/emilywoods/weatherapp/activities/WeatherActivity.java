@@ -26,7 +26,7 @@ import timber.log.Timber;
  * Created by emilywoods on 15/11/2016.
  */
 
-public class FetchWeatherActivity extends AppCompatActivity implements FetchWeather {
+public class WeatherActivity extends AppCompatActivity implements FetchWeatherListener {
     private static final String EXTRA_LOCATIONS = "locations";
 
     private Location mLocation;
@@ -45,8 +45,8 @@ public class FetchWeatherActivity extends AppCompatActivity implements FetchWeat
     protected ImageView weatherIcon;
 
     public static void launch(Activity activity, Location location) {
-        Intent intent = new Intent(activity, FetchWeatherActivity.class);
-        intent.putExtra(FetchWeatherActivity.EXTRA_LOCATIONS, location);
+        Intent intent = new Intent(activity, WeatherActivity.class);
+        intent.putExtra(WeatherActivity.EXTRA_LOCATIONS, location);
         activity.startActivity(intent);
     }
 

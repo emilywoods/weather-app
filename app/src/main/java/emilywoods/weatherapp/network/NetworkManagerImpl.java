@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import emilywoods.weatherapp.activities.LocationCallback;
 import emilywoods.weatherapp.models.WeatherInfo;
 import emilywoods.weatherapp.models.Location;
-import emilywoods.weatherapp.activities.FetchWeather;
+import emilywoods.weatherapp.activities.FetchWeatherListener;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -43,24 +43,24 @@ public class NetworkManagerImpl implements NetworkManager {
     }
 
     @Override
-    public void getWeatherInfo(int locationId, final FetchWeather fetchWeather) {
+    public void getWeatherInfo(int locationId, final FetchWeatherListener fetchWeatherListener) {
         Call<WeatherInfo> call = weatherApi.getWeatherInfo(locationId);
         call.enqueue(new Callback<WeatherInfo>() {
             @Override
             public void onResponse(Call<WeatherInfo> call, Response<WeatherInfo> response) {
                 if (response == null || response.body() == null) {
                     Timber.e("Empty response from location request.");
-                    fetchWeather.onCurrentWeatherError();
+                    fetchWeatherListener.onCurrentWeatherError();
                     return;
                 }
                 Timber.i("Success");
-                fetchWeather.onCurrentWeatherFetched(response.body());
+                fetchWeatherListener.onCurrentWeatherFetched(response.body());
             }
 
             @Override
             public void onFailure(Call<WeatherInfo> call, Throwable throwable) {
                 Timber.e(throwable, "Error fetching location info.");
-                fetchWeather.onCurrentWeatherError();
+                fetchWeatherListener.onCurrentWeatherError();
             }
         });
     }

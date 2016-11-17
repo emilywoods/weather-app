@@ -1,6 +1,5 @@
 package emilywoods.weatherapp.activities;
 
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +22,7 @@ import emilywoods.weatherapp.R;
 import emilywoods.weatherapp.models.Location;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements LocationCallback, LocationClickListener {
+public class LocationActivity extends AppCompatActivity implements LocationCallback, LocationClickListener {
     private static final int INDEX_VIEW_LOADING = 0;
     private static final int INDEX_VIEW_CONTENT = 1;
 
@@ -86,6 +85,6 @@ public class MainActivity extends AppCompatActivity implements LocationCallback,
 
     @Override
     public void onLocationClicked(Location location) {
-        FetchWeatherActivity.launch(this, location);
+        WeatherActivity.launch(this, location);
     }
 }
