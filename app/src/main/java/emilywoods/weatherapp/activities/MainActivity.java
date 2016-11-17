@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements LocationCallback,
     @BindView(R.id.view_switcher)
     protected ViewSwitcher viewSwitcher;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements LocationCallback,
         networkManager = new NetworkManagerImpl();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -61,19 +59,11 @@ public class MainActivity extends AppCompatActivity implements LocationCallback,
         viewSwitcher.setDisplayedChild(INDEX_VIEW_LOADING);
     }
 
-    /*
-    @Override
-    public void onCurrentWeatherFetched(CurrentWeather currentWeather) {
-        Timber.d("Fetched current weather info :%s", currentWeather.getDescription());
-    }
-*/
-
     @Override
     public void onLocationsFetched(List<Location> locations) {
         Timber.i("Fetched %s locations.", locations.size());
         locationsAdapter.setLocationsList(locations);
         viewSwitcher.setDisplayedChild(INDEX_VIEW_CONTENT);
-
     }
 
     @Override
@@ -94,13 +84,9 @@ public class MainActivity extends AppCompatActivity implements LocationCallback,
         networkManager.getLocationInfo(this);
     }
 
-
     public void onClicked(Location location) {
         final Intent intent = new Intent(this, WeatherActivity.class);
         intent.putExtra("location", location);
         startActivity(intent);
     }
-
-
-
 }

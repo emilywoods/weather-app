@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 public class NetworkManagerImpl implements NetworkManager {
-    public static final String BASE_URL = "http://10.10.0.55:3000/api/v1/";
+    public static final String BASE_URL = "http://10.2.1.6:3000/api/v1/";
 
     private HttpLoggingInterceptor interceptor;
     private OkHttpClient client;

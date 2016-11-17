@@ -77,5 +77,4 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.MyVi
         return locationsList.size();
     }
 
-
 }

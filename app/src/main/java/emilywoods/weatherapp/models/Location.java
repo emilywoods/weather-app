@@ -54,9 +54,7 @@ public class Location implements Parcelable {
         return name;
     }
 
-    public float getLongitude() {
-        return longitude;
-    }
+    public float getLongitude() { return longitude; }
 
     public float getLatitude() {
         return latitude;
