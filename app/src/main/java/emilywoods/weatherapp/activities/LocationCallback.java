@@ -2,7 +2,6 @@ package emilywoods.weatherapp.activities;
 
 import java.util.List;
 
-import emilywoods.weatherapp.models.CurrentWeather;
 import emilywoods.weatherapp.models.Location;
 
 /**
@@ -13,5 +12,5 @@ public interface LocationCallback {
 
     void onLocationsFetched(List<Location> locations);
 
-    void onError();
+    void onLocationsError();
 }

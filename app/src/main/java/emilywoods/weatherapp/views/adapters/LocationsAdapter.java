@@ -67,7 +67,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.MyVi
             @Override
             public void onClick(View view) {
                 final int position = holder.getAdapterPosition();
-                mLocationClickListener.onClicked(locationsList.get(position));
+                mLocationClickListener.onLocationClicked(locationsList.get(position));
             }
         });
     }

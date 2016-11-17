@@ -9,5 +9,5 @@ import emilywoods.weatherapp.models.Location;
  */
 
 public interface LocationClickListener {
-    void onClicked(Location location);
+    void onLocationClicked(Location location);
 }

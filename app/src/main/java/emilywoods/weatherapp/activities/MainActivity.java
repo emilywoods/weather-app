@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements LocationCallback,
     }
 
     @Override
-    public void onError() {
+    public void onLocationsError() {
         Snackbar snackbar =
                 Snackbar.make(recyclerView, R.string.location_error_message,
                         Snackbar.LENGTH_INDEFINITE)
@@ -84,9 +84,8 @@ public class MainActivity extends AppCompatActivity implements LocationCallback,
         networkManager.getLocationInfo(this);
     }
 
-    public void onClicked(Location location) {
-        final Intent intent = new Intent(this, WeatherActivity.class);
-        intent.putExtra("location", location);
-        startActivity(intent);
+    @Override
+    public void onLocationClicked(Location location) {
+        FetchWeatherActivity.launch(this, location);
     }
 }

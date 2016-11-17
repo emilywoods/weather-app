@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import emilywoods.weatherapp.activities.LocationCallback;
-import emilywoods.weatherapp.models.CurrentWeather;
+import emilywoods.weatherapp.models.WeatherInfo;
 import emilywoods.weatherapp.models.Location;
-import emilywoods.weatherapp.activities.WeatherCallback;
+import emilywoods.weatherapp.activities.FetchWeather;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -43,24 +43,24 @@ public class NetworkManagerImpl implements NetworkManager {
     }
 
     @Override
-    public void getWeatherInfo(int locationId, final WeatherCallback weatherCallback) {
-        Call<CurrentWeather> call = weatherApi.getWeatherInfo(locationId);
-        call.enqueue(new Callback<CurrentWeather>() {
+    public void getWeatherInfo(int locationId, final FetchWeather fetchWeather) {
+        Call<WeatherInfo> call = weatherApi.getWeatherInfo(locationId);
+        call.enqueue(new Callback<WeatherInfo>() {
             @Override
-            public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
+            public void onResponse(Call<WeatherInfo> call, Response<WeatherInfo> response) {
                 if (response == null || response.body() == null) {
                     Timber.e("Empty response from location request.");
-                    weatherCallback.onError();
+                    fetchWeather.onCurrentWeatherError();
                     return;
                 }
                 Timber.i("Success");
-                weatherCallback.onCurrentWeatherFetched(response.body());
+                fetchWeather.onCurrentWeatherFetched(response.body());
             }
 
             @Override
-            public void onFailure(Call<CurrentWeather> call, Throwable throwable) {
+            public void onFailure(Call<WeatherInfo> call, Throwable throwable) {
                 Timber.e(throwable, "Error fetching location info.");
-                weatherCallback.onError();
+                fetchWeather.onCurrentWeatherError();
             }
         });
     }
@@ -73,7 +73,7 @@ public class NetworkManagerImpl implements NetworkManager {
             public void onResponse(Call<List<Location>> call, Response<List<Location>> locResponse) {
                 if (locResponse == null || locResponse.body()==null) {
                     Timber.e("Empty response from location request");
-                    locationCallback.onError();
+                    locationCallback.onLocationsError();
                 } else {
                     Timber.i("Success");
                     locationCallback.onLocationsFetched(locResponse.body());
@@ -83,7 +83,7 @@ public class NetworkManagerImpl implements NetworkManager {
             @Override
             public void onFailure(Call<List<Location>> call, Throwable throwable) {
                 Timber.e(throwable, "Error fetching location info");
-                locationCallback.onError();
+                locationCallback.onLocationsError();
             }
         });
     }

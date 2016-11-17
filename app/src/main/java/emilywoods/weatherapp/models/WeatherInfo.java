@@ -1,11 +1,11 @@
 package emilywoods.weatherapp.models;
 
-public class CurrentWeather {
+public class WeatherInfo {
     private String name;
     private String description;
     private String temperature;;
 
-    public CurrentWeather(String name, String description, String temperature) {
+    public WeatherInfo(String name, String description, String temperature) {
         this.name = name;
         this.description = description;
         this.temperature = temperature;
